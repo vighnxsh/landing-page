@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from './ui/Button';
 import BuildModal from './BuildModal';
+import { usePrivy } from '@privy-io/react-auth';
 
 interface ActivityItem {
   id: string;
@@ -14,6 +15,8 @@ interface ActivityItem {
 }
 
 export const Navbar: React.FC = () => {
+  const { ready, authenticated, user, login, logout } = usePrivy();
+  
   // Generate a larger activity list on mount
   const generateActivities = (): ActivityItem[] => {
     const users = ['8sP...bZN','Ayg...xXj','G25...t4M','6up...vnw','9dg...pnp','czb...vty','m1n...abc','q5x...qfk','j2l...r9p','k7e...0mn'];
@@ -123,11 +126,42 @@ export const Navbar: React.FC = () => {
             </button>
           
           
-            <Button 
-              className="bg-green-400 text-black font-extrabold  px-4 py-2 "
-            >
-              <span className="font-extrabold text-md text-black">login</span>
-            </Button>
+            {!ready ? (
+              <Button 
+                className="bg-gray-400 text-black font-extrabold px-4 py-2"
+                disabled
+              >
+                <span className="font-extrabold text-md text-black">Loading...</span>
+              </Button>
+            ) : authenticated ? (
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  {user?.wallet?.address && (
+                    <span className="text-sm text-gray-300">
+                      {user.wallet.address.slice(0, 6)}...{user.wallet.address.slice(-4)}
+                    </span>
+                  )}
+                  {user?.email?.address && (
+                    <span className="text-sm text-gray-300">
+                      {user.email.address}
+                    </span>
+                  )}
+                </div>
+                <Button 
+                  className="bg-red-500 hover:bg-red-600 text-white font-extrabold px-4 py-2"
+                  onClick={logout}
+                >
+                  <span className="font-extrabold text-md">logout</span>
+                </Button>
+              </div>
+            ) : (
+              <Button 
+                className="bg-green-400 hover:bg-green-500 text-black font-extrabold px-4 py-2"
+                onClick={login}
+              >
+                <span className="font-extrabold text-md text-black">login</span>
+              </Button>
+            )}
           </div>
         </div>
       </div>

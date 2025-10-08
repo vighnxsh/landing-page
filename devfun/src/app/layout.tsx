@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
+import { PrivyProvider } from "@/components/PrivyProvider";
 
 
 export const metadata: Metadata = {
@@ -22,8 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased bg-black text-white`} suppressHydrationWarning>
-        <Navbar />
-        {children}
+        <PrivyProvider>
+          <Navbar />
+          {children}
+        </PrivyProvider>
       </body>
     </html>
   );
