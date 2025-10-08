@@ -111,14 +111,18 @@ export const Navbar: React.FC = () => {
               [bounties] 💰
             </a>
           </div>
+         
           <div className="flex items-center space-x-3">
-            <Button 
-              className="bg-green-400   text-black font-extrabold text-base px-3 mr-10 py-2  flex items-center space-x-2"
+            
+            <button
               onClick={() => setIsBuildOpen(true)}
+              className="group inline-flex items-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-400/40"
+              aria-label="build app"
             >
-              <Image src="/pump.png" alt="plus" width={20} height={20} />
-              <span className="font-extrabold text-md text-black">Build app</span>
-            </Button>
+              <Image src="/button.png" alt="build app" width={160} height={32} priority className="transition-opacity duration-200 group-hover:opacity-90" />
+            </button>
+          
+          
             <Button 
               className="bg-green-400 text-black font-extrabold  px-4 py-2 "
             >

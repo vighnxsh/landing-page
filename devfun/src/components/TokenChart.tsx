@@ -339,18 +339,52 @@ export function TokenChart({
     );
   }
 
-  // Calculate market cap: 1 billion supply * current price
-  const marketCap = currentPrice !== null ? (currentPrice * 1000000000) : null;
+  // Calculate market cap values: prefer live crosshair; fallback to provided metrics
+  const liveMarketCap = currentPrice !== null ? (currentPrice * 1000000000) : null;
+  const displayMarketCap = liveMarketCap ?? tokenMetrics?.marketcap ?? null;
+  const displayVolume24h = tokenMetrics?.volumeIn24h ?? null;
+  const displayChange24h = tokenMetrics?.priceChangeIn24h ?? null;
 
   return (
     <div className="w-fit">
-      <div className="relative">
-        {marketCap !== null && (
-          <div className="absolute top-2 right-2 bg-green-500 text-black px-2 py-1 rounded text-sm font-bold z-10">
-            ${marketCap.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+      <div className="flex gap-4 items-start">
+        <div className="relative">
+          <div ref={chartContainerRef} className="w-[600px] h-[300px] bg-black rounded-lg" />
+        </div>
+
+        <div className="min-w-[320px] bg-black rounded-lg p-8 text-white">
+          <div className="text-sm uppercase tracking-wide text-gray-400 mb-4">Overview</div>
+          <div className="space-y-6">
+            <div className="flex gap-6">
+              <div className="flex-1">
+                <div className="text-green-200 text-base">Market Cap</div>
+                <div className="text-2xl text-green-300 font-semibold">{displayMarketCap !== null ? `$${displayMarketCap.toLocaleString(undefined, { maximumFractionDigits: 0 })}` : '—'}</div>
+              </div>
+              <div className="flex-1">
+                <div className="text-gray-400 text-sm">Volume (24h)</div>
+                <div className="text-xl font-semibold">{displayVolume24h !== null ? `$${displayVolume24h.toLocaleString(undefined, { maximumFractionDigits: 0 })}` : '—'}</div>
+              </div>
+            </div>
+            <div>
+              <div className="text-gray-400 text-sm">24h Change</div>
+              <div className={`text-xl font-semibold ${displayChange24h !== null ? (displayChange24h >= 0 ? 'text-green-400' : 'text-red-400') : ''}`}>
+                {displayChange24h !== null ? `${displayChange24h > 0 ? '+' : ''}${displayChange24h.toFixed(2)}%` : '—'}
+              </div>
+            </div>
           </div>
-        )}
-        <div ref={chartContainerRef} className="w-[600px] h-[300px] bg-black rounded-lg" />
+
+          <div className="mt-6 flex gap-3">
+            <button
+              className="flex-1 bg-gradient-to-r from-green-400 to-green-300 hover:from-green-500 hover:to-green-400 text-black text-xl font-bold py-3 rounded"
+              disabled
+            >
+              Buy 
+            </button>
+            <button className="flex-1 bg-gradient-to-r from-red-500 to-red-400 hover:from-red-400 hover:to-red-400 text-black text-xl font-bold py-3 rounded" disabled>
+              Sell
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

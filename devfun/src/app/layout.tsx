@@ -4,12 +4,12 @@ import { Navbar } from "@/components/Navbar";
 
 
 export const metadata: Metadata = {
-  title: "dev.fun - AI-Powered App Launcher",
-  description: "Turn ideas into live apps in under a minute. No coding required. Create viral tools and games for your pump.fun coins instantly.",
+  title: "dev.fun ",
+  description: "You are a real dev",
   keywords: "AI, app creation, pump.fun, crypto, web3, no-code, rapid prototyping",
   openGraph: {
-    title: "dev.fun - AI-Powered App Launcher",
-    description: "Turn ideas into live apps in under a minute. No coding required.",
+    title: "dev.fun - AI-Powered App Launcher onchain",
+    description: "You are a real dev",
     type: "website",
   },
 };
