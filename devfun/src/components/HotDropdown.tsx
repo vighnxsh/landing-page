@@ -53,7 +53,7 @@ export default function HotDropdown({ onChange }: HotDropdownProps) {
             }`}
             onClick={() => select('hot')}
           >
-            what's hot
+            what&apos;s hot
           </button>
           <button
             type="button"
@@ -62,7 +62,7 @@ export default function HotDropdown({ onChange }: HotDropdownProps) {
             }`}
             onClick={() => select('new')}
           >
-            what's new
+            what&apos;s new
           </button>
         </div>
       )}

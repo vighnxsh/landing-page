@@ -22,8 +22,6 @@ function formatPercent(change: number): string {
 }
 
 export function FeaturedAppCard({ app }: FeaturedAppCardProps) {
-
-  const progress = Math.max(0, Math.min(100, Math.round(((app.token?.bondingCurveProgress || 0) * 100))));
   const router = useRouter();
   const marketcap = app.token?.marketcap || 0;
   const volume = app.token?.volumeIn24h || 0;
@@ -31,7 +29,7 @@ export function FeaturedAppCard({ app }: FeaturedAppCardProps) {
 
   return (
     <div
-      className=" rounded-md relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800/50 to-black  m-2 p-2 cursor-pointer group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/10 border border-gray-800 group-hover:border-black"
+      className=" rounded-md relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-900/40 to-black  m-2 p-2 cursor-pointer group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/10 border border-gray-800 group-hover:border-black"
       role="link"
       tabIndex={0}
       onClick={() => router.push(`/app/${app.id}`)}

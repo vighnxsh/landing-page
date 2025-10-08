@@ -56,7 +56,7 @@ export interface DevFunProjectDetailUser {
   avatar: string | null;
 }
 
-export interface DevFunProjectDetailToken extends DevFunToken {}
+export type DevFunProjectDetailToken = DevFunToken;
 
 export interface DevFunProjectDetail {
   id: string;

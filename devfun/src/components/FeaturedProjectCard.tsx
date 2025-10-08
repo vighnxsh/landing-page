@@ -3,7 +3,7 @@
 import { DevFunProject } from '@/types/devfun';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { FiZap, FiUser, FiHeart, FiSmartphone } from 'react-icons/fi';
+import { FiUser, FiHeart, FiSmartphone } from 'react-icons/fi';
 
 interface FeaturedProjectCardProps {
   project: DevFunProject;
@@ -75,7 +75,6 @@ export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
   const marketcap = project.token.marketcap;
   const volume = project.token.volumeIn24h;
   const change = project.token.priceChangeIn24h;
-  const progress = Math.max(0, Math.min(100, Math.round((project.token.bondingCurveProgress || 0) * 100)));
 
   return (
       <div

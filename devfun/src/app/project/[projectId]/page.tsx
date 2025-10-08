@@ -6,12 +6,7 @@ import { DevFunApiService } from '@/services/devfunApi';
 import { DevFunProjectDetail } from '@/types/devfun';
 import Image from 'next/image';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { DataStreamProvider } from '@/contexts/DataStreamProvider';
-import { TokenChartProvider } from '@/contexts/TokenChartProvider';
-import { TokenStats } from '@/components/TokenHeader/TokenStats';
-import { TokenChart } from '@/components/TokenChart/TokenChart';  
+import { TokenChart } from '@/components/TokenChart';
 
 export default function ProjectPage() {
   const params = useParams();
@@ -20,7 +15,6 @@ export default function ProjectPage() {
   const [project, setProject] = useState<DevFunProjectDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [queryClient] = useState(() => new QueryClient());
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -71,13 +65,13 @@ export default function ProjectPage() {
         </Link>
 
         {/* Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-[160px_1fr] gap-8 mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[160px_1fr] gap-8 mb-10 pt-16">
           <div className="relative w-40 h-40 rounded-none overflow-hidden border border-gray-800 bg-black/60">
             <Image src={project.image} alt={project.name} fill className="object-cover" />
           </div>
           <div className="flex flex-col justify-center">
               <h1 className="text-4xl font-extrabold mb-2">{project.name}</h1>
-            <div className="text-gray-300 mb-2">{project.oneliner}</div>
+          
             <div className="text-gray-300 leading-relaxed">{project.description}</div>
             <div className="mt-5 flex gap-3">
               {project.website && (
@@ -101,6 +95,23 @@ export default function ProjectPage() {
             </div>
           </div>
         </div>
+        {project.token && (
+          <div className="mb-12">
+           
+            <TokenChart 
+              tokenAddress={project.token.contractAddress}
+              interval="15_MINUTE"
+              days={7}
+              tokenMetrics={{
+                symbol: project.token.symbol,
+                marketcap: project.token.marketcap,
+                volumeIn24h: project.token.volumeIn24h,
+                priceChangeIn24h: project.token.priceChangeIn24h
+              }}
+            />
+          </div>
+        )}
+
 
         {/* Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -145,40 +156,11 @@ export default function ProjectPage() {
           </div>
         </div>
 
-        {/* Token Chart (full TradingView + jup datapi) */}
-        {project.token?.contractAddress ? (
-          <div className="bg-black/60 border border-gray-800 rounded-none p-4 mb-12">
-            <QueryClientProvider client={queryClient}>
-              <DataStreamProvider>
-                <TokenChartProvider>
-                  <TokenStats className="mb-2" />
-                  <div className="h-[420px] w-full bg-black">
-                    <TokenChart />
-                  </div>
-                </TokenChartProvider>
-              </DataStreamProvider>
-            </QueryClientProvider>
-          </div>
-        ) : null}
+        {/* Price Chart */}
+     
 
         {/* Additional Stats */}
-        <div className="bg-black/60 border border-gray-800 rounded-none p-6">
-          <h3 className="text-xl font-bold mb-4">metrics</h3>
-          <div className="grid grid-cols-3 gap-6 text-center">
-            <div>
-              <div className="text-2xl font-bold">{project.appCount}</div>
-              <div className="text-gray-400">Apps</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold">{project.runsCount.toLocaleString()}</div>
-              <div className="text-gray-400">Total Runs</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold">{project.likesCount.toLocaleString()}</div>
-              <div className="text-gray-400">Total Likes</div>
-            </div>
-          </div>
-        </div>
+     
       </div>
     </div>
   );

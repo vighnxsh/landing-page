@@ -26,11 +26,6 @@ export function AppCard({ app }: AppCardProps) {
     return `${sign}${change.toFixed(2)}%`;
   };
 
-  const getPriceChangeColor = (change: number) => {
-    if (change > 0) return 'text-green-400';
-    if (change < 0) return 'text-red-400';
-    return 'text-gray-400';
-  };
 
   return (
     <div

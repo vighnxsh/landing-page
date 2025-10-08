@@ -116,7 +116,7 @@ export const Navbar: React.FC = () => {
               className="bg-green-400   text-black font-extrabold text-base px-3 mr-10 py-2  flex items-center space-x-2"
               onClick={() => setIsBuildOpen(true)}
             >
-              <img src="/pump.png" alt="plus" className="w-5 h-5" />
+              <Image src="/pump.png" alt="plus" width={20} height={20} />
               <span className="font-extrabold text-md text-black">Build app</span>
             </Button>
             <Button 

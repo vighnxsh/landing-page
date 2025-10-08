@@ -1,21 +1,19 @@
-import { ProjectsGrid } from '@/components/ProjectsGrid';
 import FeaturedProjectsCarousel from '@/components/FeaturedProjectsCarousel';
 import { AppsGrid } from '@/components/AppsGrid';
 import { DevFunApiService } from '@/services/devfunApi';
-import { FiZap, FiCpu, FiTool, FiMessageSquare, FiDollarSign, FiSmile } from 'react-icons/fi';
+import { FiCpu, FiTool, FiMessageSquare, FiDollarSign, FiSmile } from 'react-icons/fi';
 import { FaGamepad } from 'react-icons/fa';
 import HotDropdown from '@/components/HotDropdown';
 
 export default async function Home() {
   let featuredProjects = [] as Awaited<ReturnType<typeof DevFunApiService.fetchFeaturedProjects>>;
   let apps = [] as Awaited<ReturnType<typeof DevFunApiService.fetchFeaturedApps>>;
-  let errorFeatured: string | null = null;
   let errorApps: string | null = null;
 
   try {
     featuredProjects = await DevFunApiService.fetchFeaturedProjects();
-  } catch (err) {
-    errorFeatured = err instanceof Error ? err.message : 'Failed to fetch featured projects';
+  } catch {
+    // Error handled by empty array fallback
   }
 
   try {
